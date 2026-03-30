@@ -2,11 +2,26 @@
   ansible.builtin.debug:
     msg: "restoring from /backup/{{ rollback_date }}/{{ inventory_hostname }}.txt"
 
+- name: Afficher le contenu du fichier avant restore
+  ansible.builtin.command:
+    cmd: "cat /tmp/{{ rollback_date }}/{{ inventory_hostname }}.txt"
+  register: backup_content
+  delegate_to: localhost
+
+- name: Debug contenu fichier
+  ansible.builtin.debug:
+    msg: "{{ backup_content.stdout }}"
+
 - name: Restore the config
   junipernetworks.junos.junos_config:
     update: override
     src: "/tmp/{{ rollback_date }}/{{ inventory_hostname }}.txt"
     src_format: set
+  register: restore_result
+
+- name: Debug résultat restore
+  ansible.builtin.debug:
+    msg: "{{ restore_result }}"
 
 - name: Print to terminal window
   ansible.builtin.debug:
