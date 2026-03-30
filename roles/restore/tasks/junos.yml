@@ -16,7 +16,6 @@
   junipernetworks.junos.junos_config:
     update: override
     src: "/tmp/{{ rollback_date }}/{{ inventory_hostname }}.txt"
-    src_format: set
   register: restore_result
 
 - name: Debug résultat restore
