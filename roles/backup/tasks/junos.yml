@@ -12,3 +12,11 @@
       dir_path: /tmp/
       filename: "{{ inventory_hostname }}.txt"
   register: config_output
+
+- name: Ajouter la suppression des VLANs au fichier de backup
+  ansible.builtin.lineinfile:
+    dir_path: /tmp/
+    filename: "{{ inventory_hostname }}.txt"
+    line: "delete vlans"
+    insertbefore: BOF
+  delegate_to: localhost
