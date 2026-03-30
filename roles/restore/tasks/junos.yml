@@ -4,7 +4,7 @@
 
 - name: Restore the config
   junipernetworks.junos.junos_config:
-    update: replace
+    update: override
     src: "/tmp/{{ rollback_date }}/{{ inventory_hostname }}.txt"
     src_format: set
 
