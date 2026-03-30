@@ -2,6 +2,15 @@
   ansible.builtin.debug:
     msg: "restoring from /backup/{{ rollback_date }}/{{ inventory_hostname }}.txt"
 
+- name: Vérifier le contenu du fichier sur backup-server
+  ansible.builtin.command:
+    cmd: "cat /backup/{{ rollback_date }}/{{ inventory_hostname }}.txt"
+  delegate_to: backup-server
+  register: backup_content
+
+- name: Afficher le contenu
+  ansible.builtin.debug:
+    msg: "{{ backup_content.stdout_lines }}"
 - name: Afficher le contenu du fichier avant restore
   ansible.builtin.command:
     cmd: "cat /tmp/{{ rollback_date }}/{{ inventory_hostname }}.txt"
