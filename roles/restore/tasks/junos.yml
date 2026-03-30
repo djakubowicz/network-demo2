@@ -22,6 +22,8 @@
     msg: "{{ backup_content.stdout }}"
 
 - name: Restore the config
+  vars:
+    ansible_connection: netconf
   junipernetworks.junos.junos_config:
     update: override
     src: "/tmp/{{ rollback_date }}/{{ inventory_hostname }}.txt"
